@@ -336,3 +336,11 @@ BEGIN
     SELECT * FROM sch_datos.Representante WHERE UsuarioId = @UsuarioId;
 END
 GO
+CREATE OR ALTER PROCEDURE sch_procs.sp_obtener_catequizando
+    @UsuarioId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT * FROM sch_datos.Catequizando WHERE UsuarioId = @UsuarioId;
+END
+GO

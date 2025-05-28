@@ -67,9 +67,11 @@ class ModeloBase:
         try:
             cursor = self.db.cursor
             params = ', '.join(['?'] * len(parametros))
-            
             cursor.execute(f"{{call sch_procs.{nombre_sp}({params})}}", parametros)
-            resultado = cursor.fetchall()
+            try:
+                resultado = cursor.fetchall()
+            except pyodbc.ProgrammingError:
+                resultado = None  # No hay resultados que retornar
             self.db.conn.commit()
             return resultado
         except pyodbc.Error as e:
@@ -82,8 +84,11 @@ class ModeloBase:
 class Catequizando(ModeloBase):
     @requiere_permiso('lectura')
     def listar(self):
-        # El procedimiento debe existir en sch_procs
         return self.ejecutar_sp('sp_listar_catequizando', [])
+
+    @requiere_permiso('lectura')
+    def obtener(self, usuario_id):
+        return self.ejecutar_sp('sp_obtener_catequizando', [usuario_id])
 
     @requiere_permiso('escritura')
     def crear(self, datos):
@@ -94,12 +99,10 @@ class Catequizando(ModeloBase):
             datos['direccion'],
             datos['parroquia_id']
         ]
-        # El procedimiento correcto según tu script es sp_crear_catequizando
         return self.ejecutar_sp('sp_crear_catequizando', params)
 
     @requiere_permiso('escritura')
     def actualizar(self, usuario_id, datos):
-        # Debes crear este procedimiento en tu base de datos si no existe
         params = [
             datos['nombre'],
             datos['fecha_nac'],
@@ -109,6 +112,10 @@ class Catequizando(ModeloBase):
             usuario_id
         ]
         return self.ejecutar_sp('sp_actualizar_catequizando', params)
+
+    @requiere_permiso('administracion')
+    def eliminar(self, usuario_id):
+        return self.ejecutar_sp('sp_eliminar_catequizando', [usuario_id])
 
 # ============== MODELO REPRESENTANTE ==============
 class Representante(ModeloBase):

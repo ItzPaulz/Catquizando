@@ -6,6 +6,6 @@
     "user": "pyconsultor",
     "password": "UDLA",
     "secret_key": "UDLA",
-    "permisos": ["lectura", "escritura", "admin"],
+    "permisos": ["lectura", "escritura", "administracion", "reportes"],
     "debug": true
 }
