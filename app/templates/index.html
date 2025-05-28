@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+<html>
+<head>
+    <title>Listado de Catequizandos</title>
+</head>
+<body>
+    <h1>Listado de Catequizandos</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <p style="color: {% if category == 'danger' %}red{% elif category == 'success' %}green{% endif %};">
+          {{ message }}
+        </p>
+      {% endfor %}
+    {% endwith %}
+
+    <a href="{{ url_for('crear') }}">Crear nuevo</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Cédula</th>
+                <th>Dirección</th>
+                <th>Parroquia</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in catequizandos %}
+            <tr>
+                <td>{{ c[1] }}</td>
+                <td>{{ c[2] }}</td>
+                <td>{{ c[3] }}</td>
+                <td>{{ c[4] }}</td>
+                <td>{{ c[5] }}</td>
+                <td>
+                    <a href="{{ url_for('editar', usuario_id=c[0]) }}">Editar</a>
+                    <form action="{{ url_for('eliminar', usuario_id=c[0]) }}" method="post" style="display:inline;">
+                        <button type="submit" onclick="return confirm('¿Estás seguro de eliminar?')">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

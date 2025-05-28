@@ -1,0 +1,11 @@
+{
+    
+    "driver": "ODBC Driver 17 for SQL Server",
+    "server": "PAULPOOL_",
+    "database": "CATEQUESIS",
+    "user": "pyconsultor",
+    "password": "UDLA",
+    "secret_key": "UDLA",
+    "permisos": ["lectura", "escritura", "admin"],
+    "debug": true
+}

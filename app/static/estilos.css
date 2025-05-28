@@ -1,0 +1,110 @@
+/* estilos.css - azulados + botones destacados */
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #e8f0fe;
+    margin: 40px;
+    color: #1a237e;
+}
+
+h1, h2 {
+    color: #0d47a1;
+}
+
+form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(13, 71, 161, 0.2);
+    max-width: 600px;
+    margin-bottom: 30px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #90caf9;
+    border-radius: 5px;
+    background-color: #f1faff;
+}
+
+a.button, button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    margin-right: 10px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.button-crear {
+    background-color: #2e7d32; /* verde oscuro */
+}
+.button-crear:hover {
+    background-color: #1b5e20;
+}
+
+.button-editar {
+    background-color: #0288d1; /* azul claro */
+}
+.button-editar:hover {
+    background-color: #0277bd;
+}
+
+.button-eliminar {
+    background-color: #c62828; /* rojo fuerte */
+}
+.button-eliminar:hover {
+    background-color: #b71c1c;
+}
+
+a.button-cancelar {
+    background-color: #757575; /* gris */
+}
+a.button-cancelar:hover {
+    background-color: #616161;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: #ffffff;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #bbdefb;
+    text-align: left;
+}
+
+th {
+    background-color: #e3f2fd;
+    color: #0d47a1;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+p {
+    padding: 10px;
+    border-radius: 5px;
+}
+
+p[style*="color: red"] {
+    background-color: #ffebee;
+}
+
+p[style*="color: green"] {
+    background-color: #e8f5e9;
+}

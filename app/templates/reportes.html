@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+<html>
+<head>
+    <title>Reportes</title>
+</head>
+<body>
+    <h1>Reportes</h1>
+    <p>Total Catequizandos: {{ estadisticas.total }}</p>
+
+    <h2>Por Parroquia</h2>
+    <ul>
+        {% for parroquia, cantidad in estadisticas.por_parroquia.items() %}
+        <li>{{ parroquia }}: {{ cantidad }}</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('index') }}">Volver</a>
+</body>
+</html>
