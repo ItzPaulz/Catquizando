@@ -10,7 +10,7 @@ CREATE SCHEMA sch_procs AUTHORIZATION dbo;
 GO
 
 
---MODIFICACIÓN DE TABLAS
+--MODIFICACIï¿½N DE TABLAS
 
 IF EXISTS (SELECT 1 FROM sys.tables WHERE name = 'Catequizando' AND schema_id = SCHEMA_ID('dbo'))
 BEGIN
@@ -24,7 +24,9 @@ END
 GO
 
 -- 4. PROCEDIMIENTOS ALMACENADOS
-
+use CATEQUESIS
+GO
+SELECT *FROM [sch_datos].[Catequizando]
 
 CREATE OR ALTER PROCEDURE sch_procs.sp_crear_catequizando
     @Nombre NVARCHAR(100),
@@ -178,7 +180,7 @@ BEGIN
     )
     BEGIN
         ROLLBACK TRANSACTION;  -- Primero hacer rollback
-        RAISERROR('Error: La edad debe estar entre 5 y 17 años para la inscripción', 16, 1);
+        RAISERROR('Error: La edad debe estar entre 5 y 17 aï¿½os para la inscripciï¿½n', 16, 1);
     END
 END
 GO
@@ -189,15 +191,148 @@ GRANT INSERT ON sch_datos.Catequizando TO pythonconsultor;
 
 EXEC sch_procs.sp_crear_catequizando 
     @Nombre = 'Juana Narvaez',
-    @FechaNac = '2009-03-20',
+    @FechaNac = '2009-03-20',	
     @Cedula = '123453390',
     @Direccion = 'homero salas',
     @ParroquiaId = 1;
 
--- Insert inválido (edad 5 años)
+-- Insert invï¿½lido (edad 5 aï¿½os)
 EXEC sch_procs.sp_crear_catequizando 
-    @Nombre = 'Ana García',
+    @Nombre = 'Ana Garcï¿½a',
     @FechaNac = '2019-05-15',
     @Cedula = '0987654321',
     @Direccion = 'Avenida Test 456',
     @ParroquiaId = 1;
+
+	-- Listar todos los catequizandos
+CREATE OR ALTER PROCEDURE sch_procs.sp_listar_catequizando
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT * FROM sch_datos.Catequizando;
+END
+GO
+
+-- Obtener un catequizando por ID
+CREATE OR ALTER PROCEDURE sch_procs.sp_obtener_catequizando
+    @UsuarioId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT * FROM sch_datos.Catequizando WHERE UsuarioId = @UsuarioId;
+END
+GO
+
+-- Actualizar un catequizando
+CREATE OR ALTER PROCEDURE sch_procs.sp_actualizar_catequizando
+    @UsuarioId INT,
+    @Nombre NVARCHAR(100),
+    @FechaNac DATE,
+    @Cedula NVARCHAR(20),
+    @Direccion NVARCHAR(200),
+    @ParroquiaId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        UPDATE sch_datos.Catequizando
+        SET NombreCompleto = @Nombre,
+            FechaNacimiento = @FechaNac,
+            Cedula = @Cedula,
+            Direccion = @Direccion,
+            ParroquiaId = @ParroquiaId
+        WHERE UsuarioId = @UsuarioId;
+
+        COMMIT;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK;
+        THROW;
+    END CATCH
+END
+GO
+
+-- Eliminar un catequizando
+CREATE OR ALTER PROCEDURE sch_procs.sp_eliminar_catequizando
+    @UsuarioId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        DELETE FROM sch_datos.Catequizando WHERE UsuarioId = @UsuarioId;
+
+        COMMIT;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK;
+        THROW;
+    END CATCH
+END
+GO
+-- Crear representante
+CREATE OR ALTER PROCEDURE sch_procs.sp_representante_crear
+    @Nombre NVARCHAR(100),
+    @Parentesco NVARCHAR(50),
+    @Telefono NVARCHAR(20),
+    @UsuarioId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        INSERT INTO sch_datos.Representante (
+            NombreCompleto,
+            Parentesco,
+            Telefono,
+            UsuarioId
+        )
+        VALUES (
+            @Nombre,
+            @Parentesco,
+            @Telefono,
+            @UsuarioId
+        );
+
+        COMMIT;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK;
+        THROW;
+    END CATCH
+END
+GO
+
+-- Eliminar representante
+CREATE OR ALTER PROCEDURE sch_procs.sp_representante_eliminar
+    @RepresentanteId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        DELETE FROM sch_datos.Representante WHERE RepresentanteId = @RepresentanteId;
+
+        COMMIT;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK;
+        THROW;
+    END CATCH
+END
+GO
+
+-- Listar representantes por usuario
+CREATE OR ALTER PROCEDURE sch_procs.sp_representante_listar
+    @UsuarioId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT * FROM sch_datos.Representante WHERE UsuarioId = @UsuarioId;
+END
+GO
