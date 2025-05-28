@@ -1,29 +1,22 @@
-<!DOCTYPE html>
-<link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
-<html>
-<head>
-    <title>Crear Catequizando</title>
-</head>
-<body>
-    <h1>Nuevo Catequizando</h1>
-    <form method="POST">
-        <h2>Datos del Catequizando</h2>
-        Nombre: <input type="text" name="nombre" required><br>
-        Fecha Nacimiento: <input type="date" name="fecha_nac" required><br>
-        Cédula: <input type="text" name="cedula" required><br>
-        Dirección: <input type="text" name="direccion" required><br>
-        Parroquia ID: <input type="number" name="parroquia_id" required><br>
+<!-- Agrega dentro del <head> -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        <h2>Representante</h2>
-        Nombre: <input type="text" name="rep_nombre" required><br>
-        Parentesco: <input type="text" name="rep_parentesco" required><br>
-        Teléfono: <input type="text" name="rep_telefono" required><br>
+<!-- Dentro del <body> -->
+<h1 class="text-center text-success mb-4">Nuevo Catequizando</h1>
 
-        <button type="submit">Guardar</button>
-        <a href="{{ url_for('index') }}">Cancelar</a>
-    </form>
-</body>
+<form method="POST" class="p-4 bg-white shadow rounded mx-auto" style="max-width: 600px;">
+    <h2>Datos del Catequizando</h2>
+    Nombre: <input type="text" name="nombre" class="form-control" required><br>
+    Fecha Nacimiento: <input type="date" name="fecha_nac" class="form-control" required><br>
+    Cédula: <input type="text" name="cedula" class="form-control" required><br>
+    Dirección: <input type="text" name="direccion" class="form-control" required><br>
+    Parroquia ID: <input type="number" name="parroquia_id" class="form-control" required><br>
 
-</html>
+    <h2>Representante</h2>
+    Nombre: <input type="text" name="rep_nombre" class="form-control" required><br>
+    Parentesco: <input type="text" name="rep_parentesco" class="form-control" required><br>
+    Teléfono: <input type="text" name="rep_telefono" class="form-control" required><br>
 
-
+    <button type="submit" class="btn btn-success">💾 Guardar</button>
+    <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancelar</a>
+</form>
